@@ -9,7 +9,8 @@ from typing import Optional, Dict, Any, List
 HOMEASSISTANT_URL = os.getenv('HOMEASSISTANT_URL')
 HOMEASSISTANT_TOKEN = os.getenv('HOMEASSISTANT_TOKEN')
 
-ENTITIES_MAP_FILE = 'E://PyProject//netmcp//entities_map.json'
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+ENTITIES_MAP_FILE = os.path.join(BASE_DIR, 'entities_map.json')
 
 HEADERS = {
     "Authorization": f"Bearer {HOMEASSISTANT_TOKEN}",
