@@ -63,7 +63,7 @@ def scheduler_loop(mcp):
         tasks = load_tasks()
         updated_tasks = []
 
-        print(f"Checking tasks at {now.strftime(DATE_FORMAT)}")
+        #print(f"Checking tasks at {now.strftime(DATE_FORMAT)}")
 
         for task in tasks:
             try:
