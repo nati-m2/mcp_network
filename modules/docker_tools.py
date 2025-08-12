@@ -2,7 +2,6 @@ import requests
 import os
 import threading
 from dotenv import load_dotenv
-
 load_dotenv()
 
 PORTAINER_URL = os.getenv('PORTAINER_URL').rstrip("/")
