@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  mcp-server:
+    build: .
+    environment:
+      - TZ=Asia/Jerusalem
+    ports:
+      - "8086:8080"
+    restart: unless-stopped
