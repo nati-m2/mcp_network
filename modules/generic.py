@@ -1,6 +1,14 @@
-
+from datetime import datetime
 
 def register_tools(mcp):
+    @mcp.tool()
+    def get_current_datetime() -> str:
+        """
+        Returns the current date and time formatted as 'DD.MM.YYYY HH:MM:SS'.
+        """
+        now = datetime.now()
+        return now.strftime("%d.%m.%Y %H:%M:%S")
+
     @mcp.tool()
     def add(a: int, b: int) -> int:
         """
