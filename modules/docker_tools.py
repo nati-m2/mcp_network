@@ -35,11 +35,13 @@ class PortainerAPI:
             raise ValueError("No endpoints found in Portainer")
         self.endpoint_id = endpoints[0]["Id"]
 
-    def _get(self, path, **kwargs):
-        kwargs.setdefault("timeout", 30)  # Default timeout for GET requests
+    def _get(self, path, json_response=True, **kwargs):
+        kwargs.setdefault("timeout", 30)
         r = requests.get(f"{self.base_url}{path}", headers=self.headers, **kwargs)
         r.raise_for_status()
-        return r.json()
+        if json_response:
+            return r.json()
+        return r.text
 
     def _post(self, path, **kwargs):
         kwargs.setdefault("timeout", 30)  # Default timeout for POST requests
@@ -74,9 +76,10 @@ class PortainerAPI:
 
     def get_container_logs(self, name, lines=50):
         container_id = self.get_container_id(name)
-        logs = self._get(f"/endpoints/{self.endpoint_id}/docker/containers/{container_id}/logs?stdout=1&stderr=1&tail={lines}")
-        if isinstance(logs, list):
-            logs = "".join(logs)
+        logs = self._get(
+            f"/endpoints/{self.endpoint_id}/docker/containers/{container_id}/logs?stdout=1&stderr=1&tail={lines}",
+            json_response=False
+        )
         return logs
 
     def start_container(self, name):

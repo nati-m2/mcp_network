@@ -9,19 +9,13 @@ def register_tools(mcp):
 
     @mcp.tool()
     def get_current_datetime() -> str:
-        """
-        Returns the current date and time formatted as 'DD.MM.YYYY HH:MM:SS'.
-        """
+        """Returns the current date and time formatted as 'DD.MM.YYYY HH:MM:SS'."""
         now = datetime.now()
         return now.strftime("%d.%m.%Y %H:%M:%S")
 
     @mcp.tool()
     def add(a: int, b: int) -> int:
-        """
-        Add two numbers and return the result.
-        :param a: The first number.
-        :param b: The second number.
-        """
+        """Add two numbers and return the result."""
         return a + b
 
     @mcp.resource("greeting://{name}")
