@@ -18,6 +18,7 @@ System Optimization
 Define system checks in checks.json to let the AI analyze your system and suggest actions like starting containers or restarting services.
 
 Example checks.json:
+   ```bash
 [
   "Check containers and return inactive ones",
   "Verify disk space usage",
@@ -25,5 +26,7 @@ Example checks.json:
   "Verify important services are running"
 ]
 
+
 The system_optimizer tool reads this file and returns recommended actions in JSON format.
+
 
