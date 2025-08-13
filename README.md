@@ -1,5 +1,8 @@
 
-MCP Network is an AI-driven home automation and system management server. It allows you to control smart home devices, manage Docker containers, and automate system tasks.
+# MCP Network
+
+MCP Network is an AI-driven home automation and system management server.  
+It allows you to control smart home devices, manage Docker containers, and automate system tasks.
 
 ## Key Features
 - Control lights, AC, fans, doors, and more.
@@ -12,21 +15,41 @@ MCP Network is an AI-driven home automation and system management server. It all
 1. Clone the repository:
    ```bash
    git clone https://github.com/yourusername/mcp-network.git
+   ```
+2. Create a `.env` file in the project root with the following structure:
 
-System Optimization
+   ```env
+   # Home Assistant Configuration
+   HOMEASSISTANT_URL=http://192.168.0.100:8123
+   HOMEASSISTANT_TOKEN=eyJhbGciOiJIUzI1NiIsInR...
 
-Define system checks in checks.json to let the AI analyze your system and suggest actions like starting containers or restarting services.
+   # Portainer Configuration
+   PORTAINER_USERNAME=admin
+   PORTAINER_PASSWORD=dRuP@ssw0rd
+   PORTAINER_URL=http://192.168.0.101:9000
 
-Example checks.json:
-   ```bash
+   # Scheduler
+   TRIGGER_INTERVAL=10
+   TRIGGER_WEBHOOK_URL=https://example.com/webhook
+   ```
+
+## System Optimization
+
+Define system checks in `checks.json` to let the AI analyze your system and suggest actions like starting containers or restarting services.
+
+Example `checks.json`:
+
+```json
 [
   "Check containers and return inactive ones",
   "Verify disk space usage",
   "Check CPU and memory load",
   "Verify important services are running"
 ]
+```
+
+The `system_optimizer` tool reads this file and returns recommended actions in JSON format.
 
 
-The system_optimizer tool reads this file and returns recommended actions in JSON format.
 
 
