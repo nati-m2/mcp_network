@@ -15,8 +15,7 @@ It allows you to control smart home devices, manage Docker containers, and autom
 1. Clone the repository:
    ```bash
    git clone https://github.com/yourusername/mcp-network.git
-````
-
+   ```
 2. Create a `.env` file in the project root with the following structure:
 
    ```env
@@ -50,6 +49,7 @@ Example `checks.json`:
 ```
 
 The `system_optimizer` tool reads this file and returns recommended actions in JSON format.
+
 
 
 
