@@ -1,5 +1,10 @@
+הטקסט שלך קצת נשבר במבנה ה־Markdown, אז סידרתי לך אותו עם פורמט נכון:
 
-MCP Network is an AI-driven home automation and system management server. It allows you to control smart home devices, manage Docker containers, and automate system tasks.
+````markdown
+# MCP Network
+
+MCP Network is an AI-driven home automation and system management server.  
+It allows you to control smart home devices, manage Docker containers, and automate system tasks.
 
 ## Key Features
 - Control lights, AC, fans, doors, and more.
@@ -12,38 +17,40 @@ MCP Network is an AI-driven home automation and system management server. It all
 1. Clone the repository:
    ```bash
    git clone https://github.com/yourusername/mcp-network.git
+````
 
-Create a .env file in the project root with the following structure:
-   ```bash
-# Home Assistant Configuration
-HOMEASSISTANT_URL=http://192.168.0.100:8123
-HOMEASSISTANT_TOKEN=eyJhbGciOiJIUzI1NiIsInR...
+2. Create a `.env` file in the project root with the following structure:
 
-# Portainer Configuration
-PORTAINER_USERNAME=admin
-PORTAINER_PASSWORD=dRuP@ssw0rd
-PORTAINER_URL=http://192.168.0.101:9000
+   ```env
+   # Home Assistant Configuration
+   HOMEASSISTANT_URL=http://192.168.0.100:8123
+   HOMEASSISTANT_TOKEN=eyJhbGciOiJIUzI1NiIsInR...
 
-# Scheduler
-TRIGGER_INTERVAL=10
-TRIGGER_WEBHOOK_URL=https://example.com/webhook
-```
+   # Portainer Configuration
+   PORTAINER_USERNAME=admin
+   PORTAINER_PASSWORD=dRuP@ssw0rd
+   PORTAINER_URL=http://192.168.0.101:9000
 
-System Optimization
+   # Scheduler
+   TRIGGER_INTERVAL=10
+   TRIGGER_WEBHOOK_URL=https://example.com/webhook
+   ```
 
-Define system checks in checks.json to let the AI analyze your system and suggest actions like starting containers or restarting services.
+## System Optimization
 
-Example checks.json:
-   ```bash
+Define system checks in `checks.json` to let the AI analyze your system and suggest actions like starting containers or restarting services.
+
+Example `checks.json`:
+
+```json
 [
   "Check containers and return inactive ones",
   "Verify disk space usage",
   "Check CPU and memory load",
   "Verify important services are running"
 ]
+```
 
-
-The system_optimizer tool reads this file and returns recommended actions in JSON format.
-
+The `system_optimizer` tool reads this file and returns recommended actions in JSON format.
 
 
