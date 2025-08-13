@@ -13,6 +13,22 @@ MCP Network is an AI-driven home automation and system management server. It all
    ```bash
    git clone https://github.com/yourusername/mcp-network.git
 
+Create a .env file in the project root with the following structure:
+   ```bash
+# Home Assistant Configuration
+HOMEASSISTANT_URL=http://192.168.0.100:8123
+HOMEASSISTANT_TOKEN=eyJhbGciOiJIUzI1NiIsInR...
+
+# Portainer Configuration
+PORTAINER_USERNAME=admin
+PORTAINER_PASSWORD=dRuP@ssw0rd
+PORTAINER_URL=http://192.168.0.101:9000
+
+# Scheduler
+TRIGGER_INTERVAL=10
+TRIGGER_WEBHOOK_URL=https://example.com/webhook
+```
+
 System Optimization
 
 Define system checks in checks.json to let the AI analyze your system and suggest actions like starting containers or restarting services.
@@ -28,5 +44,6 @@ Example checks.json:
 
 
 The system_optimizer tool reads this file and returns recommended actions in JSON format.
+
 
 
