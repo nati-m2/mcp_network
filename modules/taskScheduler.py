@@ -13,7 +13,7 @@ TASKS_FILE = os.path.join(BASE_DIR, 'tasks.json')
 TRIGGER_INTERVAL = float(os.getenv('TRIGGER_INTERVAL', 30))
 TRIGGER_WEBHOOK_URL = os.getenv('TRIGGER_WEBHOOK_URL')
 
-DATE_FORMAT = "%d.%m.%Y %H:%M:%S"  # פורמט תאריך מלא עם שניות
+DATE_FORMAT = "%d.%m.%Y %H:%M:%S"
 
 # ---------------- File Handling ----------------
 
@@ -75,7 +75,7 @@ def scheduler_loop(mcp):
             if now >= task_time:
                 print(f"Executing scheduled task: {task['prompt']}")
                 try:
-                    send_webhook_trigger(task["prompt"])  # שולח את הפרומפט דרך ה-webhook
+                    send_webhook_trigger(task["prompt"])
                 except Exception as e:
                     print(f"Error executing task: {e}")
             else:
@@ -87,9 +87,20 @@ def scheduler_loop(mcp):
 def start_scheduler(mcp):
     threading.Thread(target=scheduler_loop, args=(mcp,), daemon=True).start()
 
+
 def register_tools(mcp):
     @mcp.tool()
     def add_scheduled_task(prompt: str, run_time: str) -> str:
+        """
+        MCP Tool: Schedule a new task to be executed at a specific date and time.
+
+        Args:
+            prompt (str): The action or instruction to execute.
+            run_time (str): The date and time for execution in the format 'DD.MM.YYYY HH:MM:SS'.
+
+        Returns:
+            str: Success message if the task was added, or error message if the date format is invalid.
+        """
         try:
             datetime.strptime(run_time, DATE_FORMAT)
         except ValueError:
@@ -100,14 +111,30 @@ def register_tools(mcp):
 
     @mcp.tool()
     def list_scheduled_tasks() -> str:
+        """
+        MCP Tool: List all currently scheduled tasks.
+
+        Returns:
+            str: A numbered list of scheduled tasks with their prompts and execution times.
+                  If there are no tasks, returns a message indicating the list is empty.
+        """
         tasks = load_tasks()
         if not tasks:
             return "No scheduled tasks."
-        lines = [f"{i+1}. {task['prompt']} at {task['time']}" for i, task in enumerate(tasks)]
+        lines = [f"{i + 1}. {task['prompt']} at {task['time']}" for i, task in enumerate(tasks)]
         return "\n".join(lines)
 
     @mcp.tool()
     def delete_scheduled_task(task_number: int) -> str:
+        """
+        MCP Tool: Delete a scheduled task by its number in the list.
+
+        Args:
+            task_number (int): The position of the task in the list (1-based index).
+
+        Returns:
+            str: Success message with the removed task details, or error message if the number is invalid.
+        """
         tasks = load_tasks()
         if task_number < 1 or task_number > len(tasks):
             return "❌ Invalid task number."

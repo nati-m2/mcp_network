@@ -5,7 +5,6 @@ from dotenv import load_dotenv
 load_dotenv()
 from typing import Optional, Dict, Any, List
 
-# הגדרת פרמטרים גלובליים
 HOMEASSISTANT_URL = os.getenv('HOMEASSISTANT_URL')
 HOMEASSISTANT_TOKEN = os.getenv('HOMEASSISTANT_TOKEN')
 
@@ -80,7 +79,6 @@ def register_tools(mcp):
                 entities = json.load(f)
             return entities
         except (FileNotFoundError, json.JSONDecodeError):
-            # במקרה של שגיאה, תחזיר רשימה ריקה
             print(f"Error: Could not find or read the file at {ENTITIES_MAP_FILE}")
             return []
 
