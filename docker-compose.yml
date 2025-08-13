@@ -2,9 +2,13 @@ version: '3.8'
 
 services:
   mcp-server:
-    build: .
+    build:
+      context: .
     environment:
       - TZ=Asia/Jerusalem
     ports:
       - "8086:8080"
     restart: unless-stopped
+    volumes:
+      #map app
+      - /srv/link_appdata/mcp-network:/app
