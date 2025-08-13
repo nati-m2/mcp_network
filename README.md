@@ -1,6 +1,4 @@
-הטקסט שלך קצת נשבר במבנה ה־Markdown, אז סידרתי לך אותו עם פורמט נכון:
 
-````markdown
 # MCP Network
 
 MCP Network is an AI-driven home automation and system management server.  
@@ -52,5 +50,6 @@ Example `checks.json`:
 ```
 
 The `system_optimizer` tool reads this file and returns recommended actions in JSON format.
+
 
 
