@@ -74,6 +74,33 @@ MCP Network includes an AI-powered system optimizer. It reads system checks from
   "Verify important services are running"
 ]
 ```
+### Example env_config.json
+```
+
+{
+  "server1": {
+    "username": "user",
+    "password": "5.....",
+    "host": "192.168.0.50",
+    "working_dir": "/tmp",
+    "metrics": [
+      "disk_usage",
+      "cpu_load",
+      "memory_usage",
+      "wifi_status",
+      "processes",
+      "network",
+      "temperature",
+      "uptime",
+      "docker_containers",
+      "disk_inode",
+      "network_speed"
+    ]
+  }
+}
+
+```
+
 
 The `system_optimizer` tool analyzes these checks and returns results in JSON format for automated or manual execution.
 
@@ -87,19 +114,14 @@ Use the `get_remote_metrics` tool to fetch metrics from a remote environment:
 
 ```python
 # Fetch all allowed metrics
-metrics = get_remote_metrics("omv")
+metrics = get_remote_metrics("server1")
 
 # Fetch a single metric
-disk_usage = get_remote_metrics("omv", metrics="disk_usage")
+disk_usage = get_remote_metrics("server1", metrics="disk_usage")
 ```
 
 **Allowed metrics examples:**
-
-* `disk_usage` → Disk space usage (`df -h`)
-* `cpu_load` → CPU load (`uptime`)
-* `memory_usage` → Memory usage (`free -h`)
-* `wifi_status` → Wireless network info (`iwconfig`)
-
+  
 If you request a metric not allowed for the environment, you will receive an error message.
 
 ---
@@ -150,3 +172,4 @@ MIT License – see [LICENSE](LICENSE) for details.
 ---
 
 Do you want me to add that diagram?
+
