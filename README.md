@@ -45,18 +45,25 @@ It allows you to control smart home devices, manage Docker containers, monitor s
    TRIGGER_WEBHOOK_URL=https://example.com/webhook
    ```
 
-3. **Install dependencies:**
+3. **Install **
 
    ```bash
-   pip install -r requirements.txt
-   ```
+version: '3.8'
 
-4. **Run MCP Network:**
+services:
+  mcp-server:
+    build:
+      context: .
+    environment:
+      - TZ=Asia/Jerusalem
+    ports:
+      - "8086:8080"
+    restart: unless-stopped
+    volumes:
+      #map app
+      - ./mcp-network:/app  
 
-   ```bash
-   python main.py
-   ```
-
+ ```
 ---
 
 ## System Optimization
@@ -169,5 +176,6 @@ Contributions are welcome! Please open issues or pull requests for improvements,
 MIT License – see [LICENSE](LICENSE) for details.
 
 ---
+
 
 
