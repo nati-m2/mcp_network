@@ -176,18 +176,75 @@ stop_container("plex")
 * Limit AI actions to predefined system checks to avoid unintended changes.
 
 ---
-
-## Contributing
-
-Contributions are welcome! Please open issues or pull requests for improvements, bug fixes, or new features.
+בטח! הנה גרסה מסכמת וברורה להוראות באנגלית שתוכל לשים ב־README.md תחת **Creating New Tools**:
 
 ---
 
+## Creating New Tools
+
+You can easily add custom tools to MCP Network. Follow these steps:
+
+1. **Write your tool script**
+
+   * Create a new Python file in the `modules/` directory, e.g., `modules/my_tool.py`.
+   * Define your tool functions using the `@mcp.tool()` decorator. Example:
+
+   ```python
+   from datetime import datetime
+
+   def register_tools(mcp):
+
+       @mcp.tool()
+       def get_current_datetime() -> str:
+           """Returns the current date and time formatted as 'DD.MM.YYYY HH:MM:SS'."""
+           now = datetime.now()
+           return now.strftime("%d.%m.%Y %H:%M:%S")
+   ```
+
+2. **Add dependencies**
+
+   * If your tool requires additional Python packages, add them to the `[project] dependencies` list in `pyproject.toml`:
+
+   ```toml
+   dependencies = [
+       "mcp[cli]>=1.12.4",
+       "requests",
+       "colorlog",
+       "paramiko",
+       "your_new_dependency"
+   ]
+   ```
+
+3. **Register the tool**
+
+   * Ensure your function is included inside `register_tools(mcp)` so it is loaded when the MCP server starts.
+
+4. **Verify tool loading**
+
+   * Start the MCP server. You should see logs like:
+
+   ```
+   🔍 Starting tool loading process...
+   ✅ Loaded module: modules.my_tool
+   🛠 MCP tools were registered by modules:
+       - modules.my_tool
+   ```
+
+5. **Inspect before connecting to the AI agent**
+
+   * Run the inspector to verify your tool is correctly loaded:
+
+   ```bash
+   npx @modelcontextprotocol/inspector
+   ```
+
+---
 ## License
 
 MIT License – see [LICENSE](LICENSE) for details.
 
 ---
+
 
 
 
