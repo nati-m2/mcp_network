@@ -1,4 +1,3 @@
-Here’s an updated `README.md` including a **Metrics & Container Management Examples** section with practical usage instructions:
 
 ---
 
@@ -170,4 +169,5 @@ Contributions are welcome! Please open issues or pull requests for improvements,
 MIT License – see [LICENSE](LICENSE) for details.
 
 ---
+
 
