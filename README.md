@@ -171,5 +171,3 @@ MIT License – see [LICENSE](LICENSE) for details.
 
 ---
 
-Do you want me to add that diagram?
-
