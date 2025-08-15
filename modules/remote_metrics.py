@@ -47,17 +47,17 @@ def run_ssh_command(connection_info: dict, command: str, working_dir: str = "") 
 def run_metric_ssh(env_data: dict, metric: str) -> str:
     """Runs a single metric command via SSH on the remote host."""
     metric_commands = {
-        "disk_usage": "df -h",  # דיסק – שימושי
-        "cpu_load": "uptime",  # עומס CPU
-        "memory_usage": "free -h",  # זיכרון
-        "wifi_status": "iwconfig",  # מצב Wi-Fi
-        "processes": "ps aux --sort=-%cpu | head -n 10",  # 10 תהליכים הכי כבדים ב-CPU
-        "network": "ip -s link",  # סטטיסטיקת רשת
-        "temperature": "sensors",  # טמפרטורות אם lm-sensors מותקן
-        "uptime": "uptime -p",  # זמן פעילות מערכת בפורמט קריא
-        "docker_containers": "docker ps -a",  # רשימת קונטיינרים Docker
-        "disk_inode": "df -i",  # Inode usage
-        "network_speed": "cat /sys/class/net/eth0/speed"  # מהירות קו את'רנט (Mb/s)
+        "disk_usage": "df -h",  
+        "cpu_load": "uptime", 
+        "memory_usage": "free -h", 
+        "wifi_status": "iwconfig", 
+        "processes": "ps aux --sort=-%cpu | head -n 10",
+        "network": "ip -s link",
+        "temperature": "sensors", 
+        "uptime": "uptime -p", 
+        "docker_containers": "docker ps -a",  
+        "disk_inode": "df -i",  
+        "network_speed": "cat /sys/class/net/eth0/speed"
     }
 
     if metric not in metric_commands:
@@ -87,7 +87,6 @@ def register_tools(mcp):
         if not allowed_metrics:
             return {"error": f"No metrics defined for environment '{env_name}'"}
 
-        # אם metrics ריקה, נריץ את כל ה־allowed metrics
         requested_metrics = [metric] if metric else allowed_metrics
 
         results = {}
