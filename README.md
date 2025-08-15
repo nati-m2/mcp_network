@@ -105,6 +105,19 @@ MCP Network includes an AI-powered system optimizer. It reads system checks from
 }
 
 ```
+| Metric             | Command                             | Description                               |
+| ------------------ | ----------------------------------- | ----------------------------------------- |
+| disk\_usage        | `df -h`                             | Disk space usage                          |
+| cpu\_load          | `uptime`                            | CPU load                                  |
+| memory\_usage      | `free -h`                           | Memory usage                              |
+| wifi\_status       | `iwconfig`                          | Wireless network info                     |
+| processes          | `ps aux --sort=-%cpu \| head -n 10` | Top 10 CPU-consuming processes            |
+| network            | `ip -s link`                        | Network interface statistics              |
+| temperature        | `sensors`                           | System temperatures (requires lm-sensors) |
+| uptime             | `uptime -p`                         | System uptime in human-readable format    |
+| docker\_containers | `docker ps -a`                      | List all Docker containers                |
+| disk\_inode        | `df -i`                             | Inode usage                               |
+| network\_speed     | `cat /sys/class/net/eth0/speed`     | Ethernet interface speed in Mb/s          |
 
 
 The `system_optimizer` tool analyzes these checks and returns results in JSON format for automated or manual execution.
@@ -175,6 +188,7 @@ Contributions are welcome! Please open issues or pull requests for improvements,
 MIT License – see [LICENSE](LICENSE) for details.
 
 ---
+
 
 
 
