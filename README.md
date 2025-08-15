@@ -47,7 +47,7 @@ It allows you to control smart home devices, manage Docker containers, monitor s
 
 3. **Install **
 
-   ```bash
+ ```docker-compose.yml
 version: '3.8'
 
 services:
@@ -62,8 +62,7 @@ services:
     volumes:
       #map app
       - ./mcp-network:/app  
-
- ```
+   ```
 ---
 
 ## System Optimization
@@ -176,6 +175,7 @@ Contributions are welcome! Please open issues or pull requests for improvements,
 MIT License – see [LICENSE](LICENSE) for details.
 
 ---
+
 
 
 
