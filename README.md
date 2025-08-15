@@ -176,9 +176,6 @@ stop_container("plex")
 * Limit AI actions to predefined system checks to avoid unintended changes.
 
 ---
-בטח! הנה גרסה מסכמת וברורה להוראות באנגלית שתוכל לשים ב־README.md תחת **Creating New Tools**:
-
----
 
 ## Creating New Tools
 
@@ -244,6 +241,7 @@ You can easily add custom tools to MCP Network. Follow these steps:
 MIT License – see [LICENSE](LICENSE) for details.
 
 ---
+
 
 
 
