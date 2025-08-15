@@ -1,6 +1,4 @@
 
----
-
 # MCP Network
 
 **MCP Network** is an AI-driven home automation and system management server.
@@ -229,7 +227,7 @@ You can easily add custom tools to MCP Network. Follow these steps:
 
 5. **Inspect before connecting to the AI agent**
 
-   * Run the inspector to verify your tool is correctly loaded:
+   * Run the inspector to verify your tool is correctly loaded and workng:
 
    ```bash
    npx @modelcontextprotocol/inspector
@@ -241,6 +239,7 @@ You can easily add custom tools to MCP Network. Follow these steps:
 MIT License – see [LICENSE](LICENSE) for details.
 
 ---
+
 
 
 
