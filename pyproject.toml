@@ -8,5 +8,6 @@ dependencies = [
     "mcp[cli]>=1.12.4",
     "requests",
     "colorlog",
-    "apscheduler"
+    "apscheduler",
+    "paramiko"
 ]

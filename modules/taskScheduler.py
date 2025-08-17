@@ -2,14 +2,11 @@ import os
 import json
 from datetime import datetime
 import requests
-from dotenv import load_dotenv
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
 from apscheduler.triggers.date import DateTrigger
-from apscheduler.triggers.interval import IntervalTrigger
-from mcp_network.logger import get_logger
+from dotenv import load_dotenv
 
-logger = get_logger()
 load_dotenv()
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -177,5 +174,4 @@ def register_tools(mcp):
 
 # Load existing tasks from file and schedule them
 load_and_schedule_all()
-logger.info(f"✅ [Scheduler] All tasks loaded and scheduled.")
-
+print(f"✅ [Scheduler] All tasks loaded and scheduled.")
