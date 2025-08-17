@@ -81,7 +81,16 @@ def register_tools(mcp):
 
     @mcp.tool()
     def add_scheduled_task(prompt: str, run_time: str) -> str:
-        """Add a one-time task."""
+        """
+        MCP Tool: Schedule a new task to be executed at a specific date and time.
+
+        Args:
+            prompt (str): The action or instruction to execute.
+            run_time (str): The date and time for execution in the format 'DD.MM.YYYY HH:MM:SS'.
+
+        Returns:
+            str: Success message if the task was added, or error message if the date format is invalid.
+        """
         try:
             datetime.strptime(run_time, DATE_FORMAT)
         except ValueError:
