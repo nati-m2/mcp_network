@@ -21,14 +21,14 @@ It allows you to control smart home devices, manage Docker containers, monitor s
 
 1. **Clone the repository:**
 
-   ```bash
+```bash
    git clone https://github.com/yourusername/mcp-network.git
    cd mcp-network
-   ```
+```
 
 2. **Create a `.env` file in the project root:**
 
-   ```env
+```env
    # Home Assistant Configuration
    HOMEASSISTANT_URL=http://192.168.0.100:8123
    HOMEASSISTANT_TOKEN=eyJhbGciOiJIUzI1NiIsInR...
@@ -41,7 +41,7 @@ It allows you to control smart home devices, manage Docker containers, monitor s
    # Scheduler Settings
    TRIGGER_INTERVAL=10
    TRIGGER_WEBHOOK_URL=https://example.com/webhook
-   ```
+```
 
 3. **Install **
 
@@ -239,6 +239,7 @@ You can easily add custom tools to MCP Network. Follow these steps:
 MIT License – see [LICENSE](LICENSE) for details.
 
 ---
+
 
 
 
