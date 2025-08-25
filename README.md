@@ -34,12 +34,10 @@ It allows you to control smart home devices, manage Docker containers, monitor s
    HOMEASSISTANT_TOKEN=eyJhbGciOiJIUzI1NiIsInR...
 
    # Portainer Configuration
-   PORTAINER_USERNAME=admin
-   PORTAINER_PASSWORD=dRuP@ssw0rd.....
    PORTAINER_URL=http://192.168.0.101:9000
+   PORTAINER_ACCESS_TOKEN=ptr_5AmW.....
 
    # Scheduler Settings
-   TRIGGER_INTERVAL=10
    TRIGGER_WEBHOOK_URL=https://example.com/webhook
 ```
 
@@ -239,6 +237,7 @@ You can easily add custom tools to MCP Network. Follow these steps:
 MIT License – see [LICENSE](LICENSE) for details.
 
 ---
+
 
 
 
