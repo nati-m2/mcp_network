@@ -5,55 +5,39 @@ from dotenv import load_dotenv
 load_dotenv()
 
 PORTAINER_URL = os.getenv('PORTAINER_URL').rstrip("/")
-USERNAME = os.getenv('PORTAINER_USERNAME').strip()
-PASSWORD = os.getenv('PORTAINER_PASSWORD').strip()
+PORTAINER_ACCESS_TOKEN = os.getenv("PORTAINER_ACCESS_TOKEN").strip()
 
 class PortainerAPI:
-    def __init__(self, url, username, password):
+    def __init__(self, url, api_key):
         self.url = url.rstrip("/")
         self.base_url = f"{self.url}/api"
-        self.username = username
-        self.password = password
-        self.token = None
-        self.endpoint_id = None
-        self.headers = None
-        self.connect()
-
-    def connect(self):
-        auth_payload = {"Username": self.username, "Password": self.password}
-        r = requests.post(f"{self.base_url}/authenticate", json=auth_payload)
-        if r.status_code == 404:
-            r = requests.post(f"{self.base_url}/auth", json=auth_payload)
-        r.raise_for_status()
-        self.token = r.json().get("jwt")
-        if not self.token:
-            raise ValueError(f"Failed to get JWT token: {r.text}")
-        self.headers = {"Authorization": f"Bearer {self.token}"}
-
-        endpoints = self._get("/endpoints")
-        if not endpoints:
-            raise ValueError("No endpoints found in Portainer")
-        self.endpoint_id = endpoints[0]["Id"]
+        # שינוי כאן → שימוש ב־X-API-Key במקום Authorization: Bearer
+        self.headers = {"X-API-Key": api_key}
+        self.endpoint_id = self._get_endpoint_id()
 
     def _get(self, path, json_response=True, **kwargs):
         kwargs.setdefault("timeout", 30)
         r = requests.get(f"{self.base_url}{path}", headers=self.headers, **kwargs)
         r.raise_for_status()
-        if json_response:
-            return r.json()
-        return r.text
+        return r.json() if json_response else r.text
 
     def _post(self, path, **kwargs):
-        kwargs.setdefault("timeout", 30)  # Default timeout for POST requests
+        kwargs.setdefault("timeout", 30)
         r = requests.post(f"{self.base_url}{path}", headers=self.headers, **kwargs)
         r.raise_for_status()
         return r.json() if r.text else {}
 
     def _post_nojson(self, path, **kwargs):
-        kwargs.setdefault("timeout", 30)  # Default timeout for POST requests
+        kwargs.setdefault("timeout", 30)
         r = requests.post(f"{self.base_url}{path}", headers=self.headers, **kwargs)
         r.raise_for_status()
         return r.text
+
+    def _get_endpoint_id(self):
+        endpoints = self._get("/endpoints")
+        if not endpoints:
+            raise ValueError("No endpoints found in Portainer")
+        return endpoints[0]["Id"]
 
     def _post_action(self, container_id, action):
         return self._post_nojson(f"/endpoints/{self.endpoint_id}/docker/containers/{container_id}/{action}")
@@ -140,8 +124,7 @@ class PortainerAPI:
         return f"✅ Container '{name}' updated with latest image"
 
 
-portainer = PortainerAPI(PORTAINER_URL, USERNAME, PASSWORD)
-
+portainer = PortainerAPI(PORTAINER_URL, PORTAINER_ACCESS_TOKEN)
 
 def register_tools(mcp):
     @mcp.tool()
