@@ -99,13 +99,6 @@ def build_code(text: str) -> Dict[str, Any]:
     return {"type": "code", "text": text}
 
 
-def build_media(media_type: str, url: str, caption: str | None = None) -> Dict[str, Any]:
-    el: Dict[str, Any] = {"type": "media", "mediaType": media_type, "url": url}
-    if caption:
-        el["caption"] = caption
-    return el
-
-
 def build_chips(items: List[Dict[str, Any]], multi_select: bool, action: str | None = None) -> Dict[str, Any]:
     el: Dict[str, Any] = {"type": "chips", "items": items, "multiSelect": multi_select}
     if action:
@@ -132,7 +125,7 @@ def build_cards(items: List[Dict[str, Any]]) -> Dict[str, Any]:
     return {"type": "cards", "items": items}
 
 
-def build_table(columns: List[str], rows: List[List[Any]]) -> Dict[str, Any]:
+def build_table(columns: List[str], rows: List[List[str]]) -> Dict[str, Any]:
     return {"type": "table", "columns": columns, "rows": rows}
 
 
@@ -142,7 +135,7 @@ def register_tools(mcp):
     """Register UI elements tool with FastMCP."""
 
     @mcp.tool()
-    def get_ui_elements(types: list[str] | None = None, elements_spec: List[Dict[str, Any]] | None = None) -> Dict[str, Any]:
+    def get_ui_elements(types: List[str] = [], elements_spec: List[Dict[str, Any]] = []) -> Dict[str, Any]:
         """
         החזר תגובת UI במבנה {"type":"response","elements":[...]}
 
@@ -226,12 +219,6 @@ def register_tools(mcp):
                     return build_markdown(spec.get("text", ""))
                 case "code":
                     return build_code(spec.get("text", ""))
-                case "media":
-                    return build_media(
-                        media_type=spec.get("mediaType", "image"),
-                        url=spec.get("url", ""),
-                        caption=spec.get("caption"),
-                    )
                 case "chips":
                     return build_chips(
                         items=spec.get("items", []),
@@ -357,10 +344,9 @@ def register_tools(mcp):
                 ],
             ))
 
-            # markdown, code, media
+            # markdown, code
             elements.append(build_markdown("## כותרת\nטקסט עם **הדגשה** ורשימה:\n- פריט 1\n- פריט 2"))
             elements.append(build_code("function add(a,b){ return a+b; }"))
-            elements.append(build_media(media_type="image", url="https://picsum.photos/800/400", caption="תמונה לדוגמה"))
 
             # chips
             elements.append(build_chips(
@@ -373,8 +359,6 @@ def register_tools(mcp):
                 action="chips_changed",
             ))
 
-            # youtube media
-            elements.append(build_media(media_type="youtube", url="https://www.youtube.com/embed/tgbNymZ7vqY", caption="וידאו לדוגמה"))
 
             # date/time pickers
             elements.append(build_date_picker(label="בחר תאריך", action="date_picked"))
@@ -405,7 +389,7 @@ def register_tools(mcp):
             ]))
 
             # table
-            elements.append(build_table(columns=["name", "value"], rows=[["A", 12], ["B", 40], ["C", 23]]))
+            elements.append(build_table(columns=["name", "value"], rows=[["A", "12"], ["B", "40"], ["C", "23"]]))
 
         # filter by requested types if provided
         if types:
@@ -416,3 +400,104 @@ def register_tools(mcp):
             return {"type": "response", "elements": filtered}
 
         return {"type": "response", "elements": elements}
+
+    @mcp.tool()
+    def ui_text(value: str) -> Dict[str, Any]:
+        """Return a UI response with a single text element."""
+        return {"type": "response", "elements": [build_text(value)]}
+
+    @mcp.tool()
+    def ui_icon(name: str, size: int = 24, color: str = "") -> Dict[str, Any]:
+        """Return a UI response with a single icon."""
+        return {"type": "response", "elements": [build_icon(name=name, size=size, color=color)]}
+
+    @mcp.tool()
+    def ui_icon_button(icon: str, action: str, color: str = "", tooltip: str = "", payload: Dict[str, Any] = {}) -> Dict[str, Any]:
+        """Return a UI response with a single icon button."""
+        return {"type": "response", "elements": [build_icon_button(icon=icon, color=color, tooltip=tooltip, action=action, payload=payload)]}
+
+    @mcp.tool()
+    def ui_button(label: str, action: str, icon: str = "", payload: Dict[str, Any] = {}) -> Dict[str, Any]:
+        """Return a UI response with a single button."""
+        return {"type": "response", "elements": [build_button(label=label, action=action, icon=icon, payload=payload)]}
+
+    @mcp.tool()
+    def ui_form(fields: List[Dict[str, Any]], submit: Dict[str, Any]) -> Dict[str, Any]:
+        """Return a UI response with a form."""
+        return {"type": "response", "elements": [build_form(fields=fields, submit=submit)]}
+
+    @mcp.tool()
+    def ui_checklist(title: str, style: str, action: str, items: List[Dict[str, Any]]) -> Dict[str, Any]:
+        """Return a UI response with a checklist."""
+        return {"type": "response", "elements": [build_checklist(title=title, style=style, action=action, items=items)]}
+
+    @mcp.tool()
+    def ui_alert(level: str, text: str) -> Dict[str, Any]:
+        """Return a UI response with a single alert."""
+        return {"type": "response", "elements": [build_alert(level=level, text=text)]}
+
+    @mcp.tool()
+    def ui_chart(title: str = "", chart_type: str = "bar", data: List[Dict[str, Any]] = [], collapsible: bool = False, on_tap_action: str = "") -> Dict[str, Any]:
+        """Return a UI response with a chart."""
+        return {"type": "response", "elements": [build_chart(title=title, chart_type=chart_type, data=data, collapsible=collapsible, on_tap_action=on_tap_action)]}
+
+    @mcp.tool()
+    def ui_tabs(tabs: List[Dict[str, Any]]) -> Dict[str, Any]:
+        """Return a UI response with tabs."""
+        return {"type": "response", "elements": [build_tabs(tabs=tabs)]}
+
+    @mcp.tool()
+    def ui_carousel(items: List[Dict[str, Any]]) -> Dict[str, Any]:
+        """Return a UI response with a carousel."""
+        return {"type": "response", "elements": [build_carousel(items=items)]}
+
+    @mcp.tool()
+    def ui_progress(variant: str, value: float, label: str = "") -> Dict[str, Any]:
+        """Return a UI response with a progress indicator."""
+        return {"type": "response", "elements": [build_progress(variant=variant, value=value, label=label)]}
+
+    @mcp.tool()
+    def ui_map(center: Dict[str, float], zoom: int, place_marker_on_tap: bool, on_tap_action: str, markers: List[Dict[str, Any]]) -> Dict[str, Any]:
+        """Return a UI response with a map."""
+        return {"type": "response", "elements": [build_map(center=center, zoom=zoom, place_marker_on_tap=place_marker_on_tap, on_tap_action=on_tap_action, markers=markers)]}
+
+    @mcp.tool()
+    def ui_markdown(text: str) -> Dict[str, Any]:
+        """Return a UI response with a Markdown block."""
+        return {"type": "response", "elements": [build_markdown(text=text)]}
+
+    @mcp.tool()
+    def ui_code(text: str) -> Dict[str, Any]:
+        """Return a UI response with a code block."""
+        return {"type": "response", "elements": [build_code(text=text)]}
+
+
+    @mcp.tool()
+    def ui_chips(items: List[Dict[str, Any]], multi_select: bool, action: str = "") -> Dict[str, Any]:
+        """Return a UI response with chips."""
+        return {"type": "response", "elements": [build_chips(items=items, multi_select=multi_select, action=action)]}
+
+    @mcp.tool()
+    def ui_date_picker(label: str, action: str) -> Dict[str, Any]:
+        """Return a UI response with a date picker."""
+        return {"type": "response", "elements": [build_date_picker(label=label, action=action)]}
+
+    @mcp.tool()
+    def ui_time_picker(label: str, action: str) -> Dict[str, Any]:
+        """Return a UI response with a time picker."""
+        return {"type": "response", "elements": [build_time_picker(label=label, action=action)]}
+
+    @mcp.tool()
+    def ui_modal(label: str, content: List[Dict[str, Any]], on_close_action: str = "") -> Dict[str, Any]:
+        """Return a UI response with a modal (dialog)."""
+        return {"type": "response", "elements": [build_modal(label=label, on_close_action=on_close_action, content=content)]}
+
+    @mcp.tool()
+    def ui_cards(items: List[Dict[str, Any]]) -> Dict[str, Any]:
+        """Return a UI response with cards."""
+        return {"type": "response", "elements": [build_cards(items=items)]}
+
+    @mcp.tool()
+    def ui_table(columns: List[str], rows: List[List[str]]) -> Dict[str, Any]:
+        """Return a UI response with a table."""
+        return {"type": "response", "elements": [build_table(columns=columns, rows=rows)]}

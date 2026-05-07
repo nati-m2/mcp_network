@@ -1,0 +1,9 @@
+{
+  "Repository": "mcp-network",
+  "Registry": "192.168.0.7:5000",
+  "Tag": "1.0.0",
+  "Build": true,
+  "BuildContext": "mcp_network",
+  "Insecure": true,
+  "ExtraTags": ["latest"]
+}
